@@ -1,0 +1,70 @@
+#include<iostream>
+#include <stdlib.h>
+using namespace std;
+ 
+int parent[10]; 
+ 
+class prism
+{
+int a,b,u,v,i,j,n,edges;
+int visited[10],min,mincost,cost[10][10];
+public:
+prism()
+{
+edges=1;
+mincost=0;
+}
+void read();
+void prisms(int cost[][10],int n);
+};
+
+void prism::read()
+{
+cout<<"Enter the no. of houses:";
+cin>>n;
+cout<<"\nEnter cost";
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+{
+cin>>cost[i][j];
+if(cost[i][j]==0)
+cost[i][j]=999;
+}
+prisms(cost,n);
+}
+ 
+void prism::prisms(int cost[][10],int n)
+{
+cout<<"\nThe minimum cost edges are: ";
+while(edges<n)
+{
+min=999;
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+if(cost[i][j]<min)
+{
+min=cost[i][j];
+a=u=i;
+b=v=j;
+}
+while(parent[u])
+u=parent[u];
+while(parent[v])
+v=parent[v];
+if(u!=v)
+{
+edges++;
+cout<<"\n Edge ( "<<a<<"->"<<b<<")"<<"\tCost="<<min;
+mincost+=min;
+parent[v]=u;
+}
+cost[a][b]=cost[b][a]=999;
+}
+cout<<"\n \n Total minimum cost \t"<<mincost<<" ";
+ }
+int main()
+{
+prism p;
+p.read();
+return 0;
+}
